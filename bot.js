@@ -14,12 +14,12 @@ class DentaBot extends ActivityHandler {
         if (!configuration) throw new Error('[QnaMakerBot]: Missing parameter. configuration is required');
 
         // create a QnAMaker connector
-        this.QnAMaker = new QnAMaker(configuration.QnAConfiguration, qnaOptions)
+        this.qnAMaker = new QnAMaker(configuration.QnAConfiguration, qnaOptions)
        
         // create a DentistScheduler connector
       
         // create a IntentRecognizer connector
-        this.IntentRecognizer = new IntentRecognizer(configuration.LuisConfiguration)
+        this.intentRecognizer = new IntentRecognizer(configuration.LuisConfiguration)
 
 
         this.onMessage(async (context, next) => {
