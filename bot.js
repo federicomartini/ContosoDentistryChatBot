@@ -17,7 +17,8 @@ class DentaBot extends ActivityHandler {
         this.qnAMaker = new QnAMaker(configuration.QnAConfiguration, qnaOptions)
        
         // create a DentistScheduler connector
-      
+        this.dentistScheduler = new DentistScheduler(configuration.SchedulerConfiguration)
+
         // create a IntentRecognizer connector
         this.intentRecognizer = new IntentRecognizer(configuration.LuisConfiguration)
 
@@ -32,7 +33,8 @@ class DentaBot extends ActivityHandler {
             const luisResult = await this.intentRecognizer.executeLuisQuery(context)
                      
             // determine which service to respond with based on the results from LUIS //
-            if (luisResult.luisResult.prediction.topIntent === "GetAvailability") {
+            if (luisResult.luisResult.prediction.topIntent === "GetAvailability" &&
+                luisResult.intents.GetAvailability.score > .5) {
                 const message = "### TEST YES ###"
                 await context.sendActivity(message);
                 console.log(message)
@@ -60,7 +62,7 @@ class DentaBot extends ActivityHandler {
         this.onMembersAdded(async (context, next) => {
         const membersAdded = context.activity.membersAdded;
         //write a custom greeting
-        const welcomeText = '';
+        const welcomeText = 'Welcome to the Dental Office Virtual Assistant service. You can ask me questions about availability and scheduling visits.';
         for (let cnt = 0; cnt < membersAdded.length; ++cnt) {
             if (membersAdded[cnt].id !== context.activity.recipient.id) {
                 await context.sendActivity(MessageFactory.text(welcomeText, welcomeText));
