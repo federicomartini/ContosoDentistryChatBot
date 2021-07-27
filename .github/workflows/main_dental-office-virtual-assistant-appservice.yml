@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'dental-office-virtual-assistant-appservice'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_dd57689c2d09402eb8a84baa7fa83583 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_ece66f0064134d379be27bbad3c247cf }}
         package: .
