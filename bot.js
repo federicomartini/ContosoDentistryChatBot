@@ -36,7 +36,7 @@ class DentaBot extends ActivityHandler {
             if (luisResult.luisResult.prediction.topIntent === "GetAvailability" &&
                 luisResult.intents.GetAvailability.score > .5) {
 
-                const message = "Yes, we can schedule a visit!!!"
+                const message = "Yes, we can schedule a visit!"
                 await context.sendActivity(message);
                 console.log(message)
                 await next();
