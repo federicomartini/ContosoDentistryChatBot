@@ -35,17 +35,21 @@ class DentaBot extends ActivityHandler {
             // determine which service to respond with based on the results from LUIS //
             if (luisResult.luisResult.prediction.topIntent === "GetAvailability" &&
                 luisResult.intents.GetAvailability.score > .5) {
-                const message = "### TEST YES ###"
+
+                const message = "Yes, we can schedule a visit."
                 await context.sendActivity(message);
                 console.log(message)
                 await next();
                 return;
+            }
+
+            if(qnaResults[0]){
+                await context.sendActivity(`${qnaResults[0].answer}`);
             } else {
-                const message = "### TEST NO ###"
-                await context.sendActivity(message);
-                console.log(message)
-                await next();
-                return;
+                // If no answers were returned from QnA Maker, reply with help.
+                await context.sendActivity(`I'm not sure I can answer your question`
+                    + 'I can answer questions about who can access our services,'
+                    + `gives info about availability of the Dental Office and schedule an appointment`);
             }
 
             // if(top intent is intentA and confidence greater than 50){
