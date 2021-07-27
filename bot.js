@@ -25,14 +25,26 @@ class DentaBot extends ActivityHandler {
         this.onMessage(async (context, next) => {
             // send user input to QnA Maker and collect the response in a variable
             // don't forget to use the 'await' keyword
-            const qnaResults = await this.QnAMaker.getAnswers(context);
+            const qnaResults = await this.qnAMaker.getAnswers(context);
 
             // send user input to IntentRecognizer and collect the response in a variable
             // don't forget 'await'
-            const luisResult = await this.IntentRecognizer.IntentRecognizer.executeLuisQuery(context)
+            const luisResult = await this.intentRecognizer.executeLuisQuery(context)
                      
             // determine which service to respond with based on the results from LUIS //
-            //if (luisResult.LuisResult.prediction.topIntent === )
+            if (luisResult.luisResult.prediction.topIntent === "GetAvailability") {
+                const message = "### TEST YES ###"
+                await context.sendActivity(message);
+                console.log(message)
+                await next();
+                return;
+            } else {
+                const message = "### TEST NO ###"
+                await context.sendActivity(message);
+                console.log(message)
+                await next();
+                return;
+            }
 
             // if(top intent is intentA and confidence greater than 50){
             //  doSomething();
