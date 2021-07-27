@@ -41,6 +41,12 @@ class DentaBot extends ActivityHandler {
                 console.log(message)
                 await next();
                 return;
+            } else {
+                const message = "No!"
+                await context.sendActivity(message);
+                console.log(message)
+                await next();
+                return;
             }
 
             if(qnaResults[0]){
